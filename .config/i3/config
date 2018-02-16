@@ -1,0 +1,217 @@
+#for_window [window_role="pop-up"] floating enable
+for_window [class="KeePass2"] move scratchpad
+#for_window [class="\ "] floating enable
+
+# i3-gaps specific
+#smart_gaps on
+#smart_borders on
+#gaps inner 10
+
+new_window pixel 2
+workspace_auto_back_and_forth yes
+
+# Modifier
+#set $mod Mod1
+set $mod Mod4
+#set $alt_mod Mod4
+set $alt_gr Mod3
+floating_modifier $mod
+
+# Startup
+exec --no-startup-id compton --config /dev/null -CGb --vsync opengl-swc
+exec --no-startup-id feh --bg-scale ~/.wallpaper/wallpaper.*
+exec --no-startup-id clipster -d
+exec --no-startup-id redshift -l 50:7
+exec --no-startup-id nm-applet
+# Autostarts on workspaces
+assign [class="Firefox"] $t1
+assign [class="Thunderbird"] $t2
+#assign [class="KeePass2"] $t4
+exec --no-startup-id i3-msg 'workspace $t1; exec firefox;'
+exec --no-startup-id thunderbird
+#exec --no-startup-id i3-msg 'workspace $t3; exec firefox --new-window mas-faculty.slack.com'
+exec --no-startup-id keepass
+
+# individual keybindings
+bindsym $mod+Escape exec i3lock -i ~/.wallpaper/wallpaper.png && systemctl suspend
+bindsym $mod+r exec urxvt -e ranger
+bindsym $mod+x exec clipster -sp
+bindsym $mod+p exec pcmanfm
+#bindsym $mod+m exec arandr
+#bindsym $mod+m [class="KeePass2"] scratchpad show
+bindsym $mod+Tab scratchpad show
+bindsym $mod+b move scratchpad
+
+# keyboard function keys
+bindsym XF86AudioMute exec --no-startup-id pamixer --toggle-mute
+bindsym XF86AudioRaiseVolume exec --no-startup-id pamixer -i 5
+bindsym XF86AudioLowerVolume exec --no-startup-id pamixer -d 5
+bindsym XF86MonBrightnessUp exec --no-startup-id light -A 20
+#bindsym XF86MonBrightnessDown exec --no-startup-id /usr/bin/declight
+bindsym XF86MonBrightnessDown exec --no-startup-id light -U 20
+
+
+# border colors
+#set $dark #bc6c4c
+set $dark #d64937
+set $light #dfaf8f
+set $white #ffffff
+
+# class        border	backgr	text	indicator
+client.focused $dark 	$dark	$white	$light
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font xft:cantarell 10
+# font xft:inconsolata 12
+
+# Workspace names
+set $t1 "1:firefox"
+set $t2 "2:mail"
+set $t3 "3:slack"
+set $t4 "4"
+set $t5 "5"
+set $t6 "6"
+set $t7 "7"
+set $t8 "8"
+set $t9 "9"
+set $t0 "0"
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec --no-startup-id dmenu_run
+# bindsym $mod+d exec --no-startup-id j4-dmenu-desktop
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# move workspace to different monitor
+bindsym $mod+Left move workspace to left
+bindsym $mod+Right move workspace to right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split in horizontal/vertical orientation
+bindsym $mod+v split h
+bindsym $mod+n split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+# bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+Shift+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+c focus child
+
+# switch to workspace
+bindsym $mod+1 workspace $t1
+bindsym $mod+2 workspace $t2
+bindsym $mod+3 workspace $t3
+bindsym $mod+4 workspace $t4
+bindsym $mod+5 workspace $t5
+bindsym $mod+6 workspace $t6
+bindsym $mod+7 workspace $t7
+bindsym $mod+8 workspace $t8
+bindsym $mod+9 workspace $t9
+bindsym $mod+0 workspace $t0
+
+#bindsym $alt_mod+1 workspace $t1
+#bindsym $alt_mod+2 workspace $t2
+#bindsym $alt_mod+3 workspace $t3
+#bindsym $alt_mod+4 workspace $t4
+#bindsym $alt_mod+5 workspace $t5
+#bindsym $alt_mod+6 workspace $t6
+#bindsym $alt_mod+7 workspace $t7
+#bindsym $alt_mod+8 workspace $t8
+#bindsym $alt_mod+9 workspace $t9
+#bindsym $alt_mod+0 workspace $t0
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $t1
+bindsym $mod+Shift+2 move container to workspace $t2
+bindsym $mod+Shift+3 move container to workspace $t3
+bindsym $mod+Shift+4 move container to workspace $t4
+bindsym $mod+Shift+5 move container to workspace $t5
+bindsym $mod+Shift+6 move container to workspace $t6
+bindsym $mod+Shift+7 move container to workspace $t7
+bindsym $mod+Shift+8 move container to workspace $t8
+bindsym $mod+Shift+9 move container to workspace $t9
+bindsym $mod+Shift+0 move container to workspace $t0
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+Escape exec i3-msg exit
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize shrink height 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        # bindsym Left resize shrink width 10 px or 10 ppt
+        # bindsym Down resize grow height 10 px or 10 ppt
+        # bindsym Up resize shrink height 10 px or 10 ppt
+        # bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: 
+        bindsym $mod+s mode "default"
+}
+bindsym $mod+s mode "resize"
+
+bar {
+    colors {
+        background #1f1f1f
+        statusline #dcdccc
+        separator #3f3f3f
+
+	#colorclass        boarder backgr. text
+        #focused_workspace  #bc6c4c #3f3f3f #dcdccc
+        focused_workspace  #d64937 #3f3f3f #dcdccc
+        #active_workspace   #333333 #5f676a #ffffff
+        active_workspace   #3f3f3f #3f3f3f #1f1f1f
+        #inactive_workspace #3f3f3f #222222 #888888
+        inactive_workspace #3f3f3f #1f1f1f #dcdccc
+        #urgent_workspace   #2f343a #900000 #ffffff
+        urgent_workspace   #3f3f3f #705050 #dcdccc
+        #binding_mode       #2f343a #900000 #ffffff
+        binding_mode       #1f1f1f #bc6c4c #1f1f1f
+    }
+    font xft:cantarell 14
+    mode hide
+    #modifier $alt_mod
+    modifier $mod
+    status_command i3status --config .config/i3/i3status.conf
+}

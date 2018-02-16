@@ -1,0 +1,55 @@
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+# End of lines configured by zsh-newuser-install
+
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/max/.zshrc'
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+
+autoload -Uz promptinit && promptinit
+autoload -Uz colors && colors
+
+eval "$(dircolors ~/.dir_colors)"
+
+alias ls='ls --group-directories-first --color=always'
+alias ll='ls -lh --group-directories-first --color=always'
+alias la='ls -lha --group-directories-first --color=always'
+alias cp='cp -rv'
+alias mntusers='sudo mount -o gid=users,fmask=113,dmask=002'
+alias mntusersntfs='sudo mount -t ntfs-3g -o gid=users,fmask=113,dmask=002'
+alias feh='feh --scale-down'
+alias enlarge_tmp='sudo mount -o remount,size=8G,noatime /tmp'
+alias remove_orphans='sudo pacman -Rns $(pacman -Qtdq)'
+alias r='ranger'
+alias vpn='sudo openvpn --config /etc/openvpn/wlanfb02.conf'
+alias latexmk='latexmk -pdf -outdir=./latexmk_out -interaction=nonstopmode'
+
+source ~/projects/office-status/dotfiles/status_update
+
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
+
+
+# taken from: https://dougblack.io/words/zsh-vi-mode.html
+bindkey -v
+
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+bindkey '^w' backward-kill-word
+bindkey '^r' history-incremental-search-backward
+bindkey 'kj' vi-cmd-mode
+
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
+    zle reset-prompt
+}
+
+zle -N zle-line-init
+zle -N zle-keymap-select
+#export KEYTIMEOUT=1
