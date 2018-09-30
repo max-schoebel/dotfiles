@@ -1,5 +1,5 @@
 #for_window [window_role="pop-up"] floating enable
-for_window [class="KeePass2"] move scratchpad
+#for_window [class="KeePass2"] floating enable
 #for_window [class="\ "] floating enable
 
 # i3-gaps specific
@@ -18,7 +18,7 @@ set $alt_gr Mod3
 floating_modifier $mod
 
 # Startup
-exec --no-startup-id compton --config /dev/null -CGb --vsync opengl-swc
+exec --no-startup-id compton --config ~/.config/compton -CGb
 exec --no-startup-id feh --bg-scale ~/.wallpaper/wallpaper.*
 exec --no-startup-id clipster -d
 exec --no-startup-id redshift -l 50:7
@@ -29,7 +29,7 @@ assign [class="Thunderbird"] $t2
 #assign [class="KeePass2"] $t4
 exec --no-startup-id i3-msg 'workspace $t1; exec firefox;'
 exec --no-startup-id thunderbird
-#exec --no-startup-id i3-msg 'workspace $t3; exec firefox --new-window mas-faculty.slack.com'
+#exec --no-startup-id i3-msg 'workspace $t3; exec slack;'
 exec --no-startup-id keepass
 
 # individual keybindings
@@ -68,7 +68,7 @@ font xft:cantarell 10
 # Workspace names
 set $t1 "1:firefox"
 set $t2 "2:mail"
-set $t3 "3:slack"
+set $t3 "3"
 set $t4 "4"
 set $t5 "5"
 set $t6 "6"

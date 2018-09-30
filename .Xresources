@@ -50,8 +50,8 @@ URxvt.color13                 :#ec93d3
 URxvt.color14                 :#93e0e3
 URxvt.color15                 :#ffffff
 
-URxvt.font:     xft:Inconsolata:size=16
-URxvt.boldFont: xft:Inconsolata:bold:size=16
+URxvt.font:     xft:Inconsolata:size=14
+URxvt.boldFont: xft:Inconsolata:bold:size=14
 !URxvt.font:     xft:dejavusansmono:size=12
 !URxvt.boldFont: xft:dejavusansmono:bold:size=12
 !URxvt.font:     xft:droidsansmono:size=13
@@ -63,3 +63,7 @@ Xft.hintstyle: hintslight
 Xft.hinting: 1
 Xft.antialias: 1
 Xft.rgba: rgb
+
+Xcursor.size: 16
+
+emacs.font: Inconsolata-14

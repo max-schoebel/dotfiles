@@ -15,20 +15,24 @@ autoload -Uz colors && colors
 
 eval "$(dircolors ~/.dir_colors)"
 
-alias ls='ls --group-directories-first --color=always'
-alias ll='ls -lh --group-directories-first --color=always'
-alias la='ls -lha --group-directories-first --color=always'
+alias ls='ls -F --group-directories-first --color=always'
+alias ll='ls -Flh --group-directories-first --color=always'
+alias la='ls -Flha --group-directories-first --color=always'
 alias cp='cp -rv'
 alias mntusers='sudo mount -o gid=users,fmask=113,dmask=002'
 alias mntusersntfs='sudo mount -t ntfs-3g -o gid=users,fmask=113,dmask=002'
 alias feh='feh --scale-down'
 alias enlarge_tmp='sudo mount -o remount,size=8G,noatime /tmp'
 alias remove_orphans='sudo pacman -Rns $(pacman -Qtdq)'
-alias r='ranger'
 alias vpn='sudo openvpn --config /etc/openvpn/wlanfb02.conf'
 alias latexmk='latexmk -pdf -outdir=./latexmk_out -interaction=nonstopmode'
-
-source ~/projects/office-status/dotfiles/status_update
+alias e='emacs -nw'
+alias u='urxvt & disown'
+alias r='ranger'
+alias sshkey='ssh-keygen -t rsa -b 4096 -C "max.schoebel@gmail.com"'
+alias docker-clean='docker rm $(docker ps -a -q -f status=exited -f status=created)'
+alias docker-clean-system'docker system prune -a -f'
+alias beamernotes='xrandr --output DP-1 --mode 1024x768 --scale 0.9375x0.9375 --pos 0x180'
 
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel'
 
@@ -53,3 +57,23 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 #export KEYTIMEOUT=1
+
+source ~/projects/office-status/dotfiles/status_update
+#export EDITOR="emacs"
+export EDITOR="vim"
+
+#ros_image=indigo-desktop-full  # 14.04
+ros_image=kinetic-desktop-full  # 16.04
+#ros_image=melodic-desktop-full-bionic  # 18.04
+
+ros-start(){
+docker run -it --env="QT_X11_NO_MITSHM=1" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" -v /home/$(whoami)/ros:/ros --device /dev/video0 --device /dev/dri osrf/ros:$ros_image bash -c "cp /ros/.bashrc /root/.bashrc && bash"
+}
+ 
+ros-connect(){
+docker exec -ti $(docker ps -aq --filter ancestor=osrf/ros:$ros_image --filter status=running) bash
+}
+ 
+ros-clean(){
+docker rm $(docker ps -aq --filter ancestor=osrf/ros:$ros_image --filter status=exited)
+}
