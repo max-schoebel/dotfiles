@@ -210,7 +210,7 @@ bar {
         binding_mode       #1f1f1f #bc6c4c #1f1f1f
     }
     font xft:cantarell 14
-    mode hide
+    #mode hide
     #modifier $alt_mod
     modifier $mod
     status_command i3status --config .config/i3/i3status.conf
